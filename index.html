@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Wall — Follow Up Teacher</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f0f4f8;
+    --surface: #ffffff;
+    --border: #dce3ea;
+    --text: #1a202c;
+    --muted: #718096;
+    --accent: #3182ce;
+    --accent-light: #ebf8ff;
+    --red: #c53030;
+    --green: #276749;
+    --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 15px; line-height: 1.6; }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-logo {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, #3182ce, #2c5282);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 700; font-size: 18px;
+  }
+  header h1 { font-size: 18px; font-weight: 600; color: var(--text); }
+  header p { font-size: 12px; color: var(--muted); }
+
+  .container { max-width: 760px; margin: 2rem auto; padding: 0 1rem 5rem; }
+
+  .hero {
+    background: linear-gradient(135deg, #2b6cb0, #3182ce);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  .hero h2 { font-size: 28px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.5px; }
+  .hero p { font-size: 13px; opacity: 0.85; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  .card-header {
+    background: #ebf8ff;
+    border-bottom: 1px solid #bee3f8;
+    padding: 0.875rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-header h3 { font-size: 13px; font-weight: 600; color: #2b6cb0; text-transform: uppercase; letter-spacing: 0.06em; }
+  .card-header span { font-size: 12px; color: #4a90d9; }
+  .card-body { padding: 1.5rem; }
+
+  .field-group { margin-bottom: 1.1rem; }
+  .field-group:last-child { margin-bottom: 0; }
+  .field-label { font-size: 13px; font-weight: 500; color: var(--muted); display: block; margin-bottom: 6px; }
+  .field-input {
+    width: 100%; padding: 10px 12px;
+    border: 1px solid var(--border); border-radius: 8px;
+    font-family: inherit; font-size: 14px; color: var(--text);
+    background: #fafbfc; transition: border-color 0.15s, background 0.15s;
+  }
+  .field-input:focus { outline: none; border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 3px rgba(49,130,206,0.1); }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* TABLE STYLE */
+  .perf-table { width: 100%; border-collapse: collapse; }
+  .perf-table th {
+    background: #f7fafc; padding: 10px 14px;
+    font-size: 12px; font-weight: 600; color: var(--muted);
+    text-align: left; border-bottom: 2px solid var(--border);
+  }
+  .perf-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 14px; }
+  .perf-table tr:last-child td { border-bottom: none; }
+  .perf-table td:first-child { font-weight: 500; color: var(--text); }
+  .level-badge {
+    display: inline-block; padding: 2px 10px; border-radius: 20px;
+    font-size: 12px; font-weight: 500;
+    background: #ebf8ff; color: #2b6cb0;
+  }
+  .perf-table input[type=number] {
+    width: 80px; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 6px;
+    font-family: inherit; font-size: 14px; text-align: center;
+    background: #fafbfc;
+  }
+  .perf-table input[type=number]:focus { outline: none; border-color: var(--accent); }
+
+  /* PROGRESS TABLE */
+  .prog-table { width: 100%; border-collapse: collapse; }
+  .prog-table th {
+    background: #f7fafc; padding: 10px 14px;
+    font-size: 12px; font-weight: 600; color: var(--muted);
+    text-align: center; border-bottom: 2px solid var(--border);
+  }
+  .prog-table th:first-child { text-align: left; }
+  .prog-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: center; }
+  .prog-table tr:last-child td { border-bottom: none; }
+  .prog-table td:first-child { font-weight: 500; text-align: left; }
+  .prog-table input[type=number] {
+    width: 70px; padding: 6px 8px;
+    border: 1px solid var(--border); border-radius: 6px;
+    font-family: inherit; font-size: 14px; text-align: center;
+    background: #fafbfc;
+  }
+  .prog-table input[type=number]:focus { outline: none; border-color: var(--accent); }
+
+  textarea.field-input { min-height: 90px; resize: vertical; }
+
+  .submit-btn {
+    width: 100%; padding: 15px;
+    background: linear-gradient(135deg, #2b6cb0, #3182ce);
+    color: #fff; border: none; border-radius: var(--radius);
+    font-family: inherit; font-size: 16px; font-weight: 600;
+    cursor: pointer; margin-top: 0.5rem;
+    transition: opacity 0.15s, transform 0.1s;
+    letter-spacing: 0.02em;
+  }
+  .submit-btn:hover { opacity: 0.92; }
+  .submit-btn:active { transform: scale(0.99); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .success-wrap { display: none; text-align: center; padding: 4rem 1rem; }
+  .success-wrap .icon { font-size: 56px; margin-bottom: 1rem; }
+  .success-wrap h2 { font-size: 22px; font-weight: 700; color: var(--green); margin-bottom: 8px; }
+  .success-wrap p { color: var(--muted); font-size: 14px; }
+
+  .pct-hint { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+  @media(max-width:600px) {
+    .three-col { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr 1fr; }
+    .perf-table input[type=number], .prog-table input[type=number] { width: 60px; }
+    header { padding: 0.75rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-logo">DW</div>
+  <div>
+    <h1>Data Wall</h1>
+    <p>Follow Up Teacher — MAPS Program</p>
+  </div>
+</header>
+
+<div class="container">
+  <div class="hero">
+    <h2>📊 Data Wall</h2>
+    <p>Please fill in all fields accurately. Your data will be saved automatically.</p>
+  </div>
+
+  <div id="form-body">
+
+    <!-- Basic Info -->
+    <div class="card">
+      <div class="card-header"><h3>Basic Information</h3></div>
+      <div class="card-body">
+        <div class="three-col">
+          <div class="field-group">
+            <label class="field-label">Teacher Name *</label>
+            <input class="field-input" id="teacher_name" type="text" placeholder="Full name">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Center Name *</label>
+            <input class="field-input" id="center_name" type="text" placeholder="Center / School">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Subject Name *</label>
+            <input class="field-input" id="subject_name" type="text" placeholder="e.g. Math">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Classroom Performance Level -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Classroom Performance Level</h3>
+        <span>مستوى الصفوف</span>
+      </div>
+      <div class="card-body" style="padding:0">
+        <table class="perf-table">
+          <thead>
+            <tr>
+              <th>Level</th>
+              <th>Current Level (%)</th>
+              <th>Target Level (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="level-badge">Level 1</span></td>
+              <td><input type="number" id="l1_current" min="0" max="100" placeholder="72"></td>
+              <td><input type="number" id="l1_target" min="0" max="100" placeholder="80"></td>
+            </tr>
+            <tr>
+              <td><span class="level-badge">Level 2</span></td>
+              <td><input type="number" id="l2_current" min="0" max="100" placeholder="75"></td>
+              <td><input type="number" id="l2_target" min="0" max="100" placeholder="85"></td>
+            </tr>
+            <tr>
+              <td><span class="level-badge">Level 3</span></td>
+              <td><input type="number" id="l3_current" min="0" max="100" placeholder="70"></td>
+              <td><input type="number" id="l3_target" min="0" max="100" placeholder="80"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Progress Percentage -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Progress Percentage</h3>
+        <span>نسب التقدم</span>
+      </div>
+      <div class="card-body" style="padding:0">
+        <table class="prog-table">
+          <thead>
+            <tr>
+              <th>Skill</th>
+              <th>Month 1</th>
+              <th>Month 2</th>
+              <th>Month 3</th>
+              <th>Month 4</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Participation</td>
+              <td><input type="number" id="part_m1" min="0" max="100" placeholder="60"></td>
+              <td><input type="number" id="part_m2" min="0" max="100" placeholder="70"></td>
+              <td><input type="number" id="part_m3" min="0" max="100" placeholder="80"></td>
+              <td><input type="number" id="part_m4" min="0" max="100" placeholder="75"></td>
+            </tr>
+            <tr>
+              <td>Communication</td>
+              <td><input type="number" id="comm_m1" min="0" max="100" placeholder="70"></td>
+              <td><input type="number" id="comm_m2" min="0" max="100" placeholder="65"></td>
+              <td><input type="number" id="comm_m3" min="0" max="100" placeholder="65"></td>
+              <td><input type="number" id="comm_m4" min="0" max="100" placeholder="70"></td>
+            </tr>
+            <tr>
+              <td>Collaboration</td>
+              <td><input type="number" id="coll_m1" min="0" max="100" placeholder="55"></td>
+              <td><input type="number" id="coll_m2" min="0" max="100" placeholder="50"></td>
+              <td><input type="number" id="coll_m3" min="0" max="100" placeholder="60"></td>
+              <td><input type="number" id="coll_m4" min="0" max="100" placeholder="65"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Improvement Goals -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Improvement Goals</h3>
+        <span>اهداف التحسين</span>
+      </div>
+      <div class="card-body">
+        <div class="field-group">
+          <label class="field-label">Describe your improvement goals (e.g. Level 2: Improve Problem Solving Skills)</label>
+          <textarea class="field-input" id="improvement_goals" placeholder="Level 1: ...&#10;Level 2: ...&#10;Level 3: ..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Support Areas -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Support Areas</h3>
+        <span>مهارات تحتاج دعم</span>
+      </div>
+      <div class="card-body">
+        <div class="field-group">
+          <label class="field-label">List the areas that need support</label>
+          <textarea class="field-input" id="support_areas" placeholder="e.g. Participation needs improvement&#10;Difficulty in critical thinking"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <button class="submit-btn" id="submit-btn" onclick="submitForm()">Submit Data Wall</button>
+
+  </div>
+
+  <div class="success-wrap" id="success-wrap">
+    <div class="icon">✅</div>
+    <h2>Submitted Successfully!</h2>
+    <p>Your Data Wall has been saved to Google Sheets.<br>Thank you for your input.</p>
+  </div>
+
+</div>
+
+<script>
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwsCiO5EuAKkZRAlGpFU3yZ9rObtzcrxhLEi0a98U3PgqWr0u1TPJMntgZ1P3zFvF2d/exec';
+
+  function val(id) {
+    return document.getElementById(id).value.trim();
+  }
+
+  async function submitForm() {
+    const teacher_name = val('teacher_name');
+    const center_name = val('center_name');
+    const subject_name = val('subject_name');
+
+    if (!teacher_name) { alert('Please enter Teacher Name'); return; }
+    if (!center_name) { alert('Please enter Center Name'); return; }
+    if (!subject_name) { alert('Please enter Subject Name'); return; }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+
+    const payload = {
+      teacher_name, center_name, subject_name,
+      l1_current: val('l1_current'), l1_target: val('l1_target'),
+      l2_current: val('l2_current'), l2_target: val('l2_target'),
+      l3_current: val('l3_current'), l3_target: val('l3_target'),
+      part_m1: val('part_m1'), part_m2: val('part_m2'), part_m3: val('part_m3'), part_m4: val('part_m4'),
+      comm_m1: val('comm_m1'), comm_m2: val('comm_m2'), comm_m3: val('comm_m3'), comm_m4: val('comm_m4'),
+      coll_m1: val('coll_m1'), coll_m2: val('coll_m2'), coll_m3: val('coll_m3'), coll_m4: val('coll_m4'),
+      improvement_goals: val('improvement_goals'),
+      support_areas: val('support_areas')
+    };
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      document.getElementById('form-body').style.display = 'none';
+      document.getElementById('success-wrap').style.display = 'block';
+    } catch (err) {
+      alert('Error submitting. Please check your connection and try again.');
+      btn.disabled = false;
+      btn.textContent = 'Submit Data Wall';
+    }
+  }
+</script>
+</body>
+</html>
